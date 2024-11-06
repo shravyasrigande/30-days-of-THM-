@@ -1,0 +1,41 @@
+Bounty Hacker
+You talked a big game about being the most elite hacker in the solar system. Prove it and claim your right to the status of Elite Bounty Hacker!
+
+Started with this room(as it is day1)
+the ip address assigned was : 10.10.134.12
+Task 1 (Living up to the title)
+Q1 - Deployed the machine
+Q2 - find all the open ports :
+to find all the open ports i used the command "nmap -v -sT ip address"
+i just found there are 3 open ports - 21,22, 80
+then i browsed into the ip address , i found some web page hosted
+and ftp has access to Anonymous
+therefore logged into ftp ipaddress
+get the file task.txt using "get task.txt -" such that the username will be displayed
+Q3 - Who wrote the task list?
+ans : lin
+Q4 - What service can you bruteforce with the text file found?
+we can also see one more file in ftp server which is locks.txt, i tried to open it , it looks like wordlist that can access to server . 
+ans : ssh( we have a protected ssh access to the server)
+Q5 - What is the users password?
+Firstly we need to download locks.txt file to our machine and then brueforce 
+using hydra command "hydra -l lin -P locks.txt -t 6 ssh://<ip>"
+ans : RedDr4gonSynd1cat3
+Q6 - user.txt 
+to get this file we need to open our secured shell
+therefore login using ssh@ipaddress then enter password 
+then look at all the files using "ls" 
+then open user.txt file using "cat user.txt" command
+hurrayy! we found the flag as "THM{CR1M3_SyNd1C4T3}"
+Q7 - root.txt
+normally there is no such file visible to us , therefore use command "ls-la" to list hidden but still there is nothing found
+login using root as sudo we got a little hint as /bin/tar. We got root access on the /bin/tar command
+Then try to exploit tar so i found some reference through google .
+I used this command to do "sudo tar -cf /dev/null /dev/null — checkpoint=1 — checkpoint-action=exec=/bin/sh"
+then i got root access
+finally list files by "ls" command , we found root.txt
+going through it using "cat root.txt" 
+ans : THM{80UN7Y_h4cK3r}
+
+That's it for this room ! Hope best for the rest !
+
